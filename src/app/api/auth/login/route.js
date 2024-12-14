@@ -17,7 +17,7 @@ export async function POST(request) {
     // Generate JWT token
     const token = generateToken(user);
 
-    // console.log("token",token)
+    // console.log("tokenmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",token)
 
     // Set token as HTTP-only cookie
     const response = NextResponse.json({ message: 'Login successful' });
