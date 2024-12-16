@@ -58,40 +58,6 @@ export default Dashboard;
 
 
 
-// // app/dashboard/page.js
-// 'use client';
-
-// import { useEffect, useState } from 'react';
-
-// const Dashboard = () => {
-//   const [message, setMessage] = useState('');
-
-//   useEffect(() => {
-//     const fetchProtectedData = async () => {
-//       const res = await fetch('/api/auth/protected');
-//       const data = await res.json();
-
-//       if (res.status === 200) {
-//         setMessage(data.message);
-//       } else {
-//         setMessage(data.message);
-//       }
-//     };
-
-//     fetchProtectedData();
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>Dashboard</h1>
-//       <p>{message}</p>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
-
 
 
 
