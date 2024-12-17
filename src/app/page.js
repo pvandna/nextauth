@@ -7,36 +7,37 @@ export default function Home() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [isSignup, setIsSignup] = useState(false); // Toggle Login/Signup
+
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('/api/auth/login', {
+    const endpoint = isSignup ? '/api/auth/signup' : '/api/auth/login';
+
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
-      credentials: 'include', // Make sure the cookie is included in the request
+      credentials: 'include', // Include cookies
     });
 
     const data = await res.json();
 
-    if (res.status === 200) {
-      console.log("login.succeeeeeeeeeeeeeeeeeeeeeeee")
-      setMessage('Login successful');
-      // Redirect to the dashboard after successful login
-      router.replace('/dashboard');
-      console.log("loginhgjhgjkhkjh.succeeeeeeeeeeeeeeeeeeeeeeee")
+    if (res.ok) {
+      setMessage(`${isSignup ? 'Signup' : 'Login'} successful`);
+      if (!isSignup) router.replace('/dashboard'); // Redirect on login
     } else {
-      setMessage(data.message || 'Login failed');
+      setMessage(data.message || 'An error occurred');
     }
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>{isSignup ? 'Signup' : 'Login'}</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
@@ -56,9 +57,17 @@ export default function Home() {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">{isSignup ? 'Signup' : 'Login'}</button>
       </form>
       {message && <p>{message}</p>}
+      <p>
+        {isSignup
+          ? 'Already have an account?'
+          : "Don't have an account?"}{' '}
+        <button onClick={() => setIsSignup(!isSignup)}>
+          {isSignup ? 'Login here' : 'Signup here'}
+        </button>
+      </p>
     </div>
   );
 }

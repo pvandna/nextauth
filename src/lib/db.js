@@ -7,6 +7,7 @@ if (!MONGO_URI) {
 }
 
 let cached = global.mongoose;
+// console.log("global",global)
 
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
@@ -28,3 +29,25 @@ async function connectToDatabase() {
 }
 
 export default connectToDatabase;
+
+
+
+
+
+
+// import mongoose from 'mongoose';
+
+// const MONGODB_URI = process.env.MONGODB_URI;
+
+// export default async function connectToDatabase() {
+//   try {
+//     if (mongoose.connection.readyState >= 1) return; // Use existing connection
+//     await mongoose.connect(MONGODB_URI, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log('Connected to MongoDB');
+//   } catch (error) {
+//     console.error('MongoDB connection error:', error);
+//   }
+// }
