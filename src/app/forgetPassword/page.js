@@ -1,4 +1,5 @@
 'use client';
+import {  useRouter } from 'next/navigation';
 
 import { useState } from 'react';
 
@@ -6,6 +7,7 @@ export default function ForgotPassword() {
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +49,7 @@ export default function ForgotPassword() {
           <input
             type="email"
             id="username"
+               placeholder='Enter Email'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required

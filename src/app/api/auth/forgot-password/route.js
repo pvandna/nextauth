@@ -5,6 +5,7 @@ import connectToDatabase from '../../../../lib/db';
 import User from '../../../../lib/models/user';
 
 export async function POST(request) {
+  
   const { username } = await request.json();
 
   await connectToDatabase();
@@ -20,10 +21,18 @@ export async function POST(request) {
 
   // Generate a secure reset token
   const resetToken = jwt.sign(
-    { userId: user._id },
-    process.env.SECRET_KEY, // Store this secret securely in your environment
-    { expiresIn: '15m' } // Token expires in 15 minutes
-  );
+  { userId: user._id, username: user.username },
+  process.env.SECRET_KEY,
+  { expiresIn: '1m' } // Adjust expiration time as needed
+);
+
+
+
+   // Save reset token to the database (you can add token expiration logic here)
+   user.resetToken = resetToken;
+   await user.save();
+
+
 
   // Configure Nodemailer
   const transporter = nodemailer.createTransport({
@@ -31,6 +40,7 @@ export async function POST(request) {
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
+      
     },
   });
 

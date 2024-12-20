@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ResetPassword() {
   const searchParams = useSearchParams();
@@ -70,6 +71,7 @@ export default function ResetPassword() {
             <input
               type="password"
               id="newPassword"
+                 placeholder='Enter password'
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
@@ -82,11 +84,17 @@ export default function ResetPassword() {
             <input
               type="password"
               id="confirmPassword"
+               placeholder=' Re Enter password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             />
+          </div>
+          <div className="flex justify-end mt-4 mb-4">
+            <Link href="/forgetPassword" className="text-blue-500 hover:underline">
+            regenerate email link
+            </Link>
           </div>
 
           <button
@@ -97,16 +105,17 @@ export default function ResetPassword() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-600">
+        <div className="mt-2 text-center text-sm text-gray-600">
+          
           <p>
-            Remembered your password?{' '}
-            <button
-              onClick={() => router.push('/')}
-              className="text-blue-500 hover:underline"
-            >
-              Login here
-            </button>
-          </p>
+          Remembered your password?{' '}
+          <button
+            onClick={() => router.push('/')}
+            className="text-blue-500 hover:underline"
+          >
+            Login here
+          </button>
+        </p>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 // src/middleware.js
 import { NextResponse } from 'next/server';
 import * as cookie from 'cookie';
@@ -11,7 +10,7 @@ export function middleware(request) {
 
   // If no token exists, redirect to home page
   if (!token) {
-    console.log("Middleware - No token, redirecting to home");
+    // console.log("Middleware - No token, redirecting to home");
     return NextResponse.redirect(new URL('/', request.url));  // Redirect to login/home
   }
 
@@ -22,7 +21,7 @@ export function middleware(request) {
 
 // Apply this middleware only to the `/dashboard` route
 export const config = {
-  matcher: ['/api', '/dashboard'], // Apply middleware to these routes
+  matcher: ['/api', '/dashboard','/adminDashboard'], // Apply middleware to these routes
 };
 
 

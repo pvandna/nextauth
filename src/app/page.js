@@ -1,8 +1,9 @@
-'use client';
+ 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
 
 export default function Home() {
   const [username, setUsername] = useState('');
@@ -27,17 +28,26 @@ export default function Home() {
     });
 
     const data = await res.json();
+    // console.log("data ", data);
 
     if (res.ok) {
       setMessage(`${isSignup ? 'Signup' : 'Login'} successful`);
-      if (!isSignup) router.replace('/dashboard'); // Redirect on login
+      const { role } = data.user; // Assuming the server sends the role in the response
+      console.log("role",role)
+
+      if (role === 'admin') {
+        // Redirect to the admin dashboard
+        router.push('/adminDashboard');
+      } else if (role === 'user') {
+        // Redirect to the user dashboard
+        router.replace('/dashboard');
+      }
     } else {
       setMessage(data.message || 'An error occurred');
     }
   };
 
   return (
-
     <div className="flex items-center justify-center min-h-screen bg-red-50">
       <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-md">
         <h1 className="text-2xl font-semibold text-center text-gray-700 mb-6">{isSignup ? 'Signup' : 'Login'}</h1>
@@ -48,6 +58,7 @@ export default function Home() {
             <input
               id="username"
               type="email"
+              placeholder='Enter Email'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -60,6 +71,7 @@ export default function Home() {
             <input
               id="password"
               type="password"
+              placeholder='Enter Password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -95,45 +107,5 @@ export default function Home() {
         </p>
       </div>
     </div>
-
-
-
-
-
-
-
-    // <div>
-    //   <h1>{isSignup ? 'Signup' : 'Login'}</h1>
-    //   <form onSubmit={handleSubmit}>
-    //     <div>
-    //       <label>Username</label>
-    //       <input
-    //         type="text"
-    //         value={username}
-    //         onChange={(e) => setUsername(e.target.value)}
-    //         required
-    //       />
-    //     </div>
-    //     <div>
-    //       <label>Password</label>
-    //       <input
-    //         type="password"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //         required
-    //       />
-    //     </div>
-    //     <button type="submit">{isSignup ? 'Signup' : 'Login'}</button>
-    //   </form>
-    //   {message && <p>{message}</p>}
-    //   <p>
-    //     {isSignup
-    //       ? 'Already have an account?'
-    //       : "Don't have an account?"}{' '}
-    //     <button onClick={() => setIsSignup(!isSignup)}>
-    //       {isSignup ? 'Login here' : 'Signup here'}
-    //     </button>
-    //   </p>
-    // </div>
   );
 }
